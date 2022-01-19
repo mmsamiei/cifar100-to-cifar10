@@ -1,4 +1,5 @@
 from computations import supervised_loss_computation
+from tqdm.auto import tqdm
 
 class SupervisedTrainer():
 
@@ -16,7 +17,7 @@ class SupervisedTrainer():
     def a_epoch(self):
         self.model.to(self.device)
         lossess = []
-        for x,y in self.train_dataloader:
+        for x,y in tqdm(self.train_dataloader):
             x = x.to(self.device)
             y = y.to(self.device)
             self.optimizer.zero_grad()
