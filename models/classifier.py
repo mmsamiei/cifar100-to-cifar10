@@ -17,7 +17,7 @@ class Classifier(nn.Module):
         self.num_of_class = [num_of_class]
         resnet_constructor, self.hid_size = resnet.model_dict[backbone]
         self.backbone = resnet_constructor()
-        self.linears = [nn.Linear(self.hid_size, self.num_of_class[-1])]
+        self.linears = nn.ModuleList([nn.Linear(self.hid_size, self.num_of_class[-1])])
     
     def forward(self, x):
         """
