@@ -11,11 +11,13 @@ class SupervisedTrainer():
         self.optimizer = optimizer 
         self.device = device
         self.head_num = 0
+        self.current_epoch_num = 0
         if 'head_num' in kwargs:
             self.head_num = kwargs['head_num']
     
     def a_epoch(self):
         self.model.to(self.device)
+        self.model.train()
         lossess = []
         for x,y in tqdm(self.train_dataloader):
             x = x.to(self.device)
@@ -25,13 +27,18 @@ class SupervisedTrainer():
             loss.backward()
             self.optimizer.step()
             lossess.append(loss.item())
-        return {'epoch_loss_mean': sum(lossess)/len(lossess),\
-             'epoch_loss_max': max(lossess), 'epoch_loss_min': min(lossess)}
+        return {'epoch_loss_mean': sum(lossess)/len(lossess), 'epoch_lossess': lossess}
     
     def run(self, num_epoch=10):
-        for epoch_num in range(num_epoch):
-            print(f"Epoch {epoch_num}: ")
+        train_losses = []
+        for i in tqdm(range(num_epoch)):
+            self.current_epoch_num += 1
+            print(f"Epoch {self.current_epoch_num}: ")
             epoch_result = self.a_epoch()
-            print(f"Mean Loss of Epoch {epoch_num} is {epoch_result['epoch_loss_mean']}:")
+            print(f"Mean Loss of Epoch {self.current_epoch_num} is {epoch_result['epoch_loss_mean']}:")
+            train_losses.append(epoch_result)
+        
+
+
 
 
