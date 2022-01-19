@@ -6,3 +6,6 @@ class Optimizer():
     
     def step(self):
         return self.optimizer.step()
+    
+    def zero_grad(self):
+        return self.zero_grad()
