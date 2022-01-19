@@ -8,4 +8,4 @@ class Optimizer():
         return self.optimizer.step()
     
     def zero_grad(self):
-        return self.zero_grad()
+        return self.optimizer.zero_grad()
