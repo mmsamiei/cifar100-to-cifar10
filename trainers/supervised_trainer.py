@@ -1,5 +1,6 @@
 from computations import supervised_loss_computation
 from tqdm.auto import tqdm
+from . import tester
 
 class SupervisedTrainer():
 
@@ -12,6 +13,7 @@ class SupervisedTrainer():
         self.device = device
         self.head_num = 0
         self.current_epoch_num = 0
+        self.validation_period = 5
         if 'head_num' in kwargs:
             self.head_num = kwargs['head_num']
     
@@ -37,6 +39,9 @@ class SupervisedTrainer():
             epoch_result = self.a_epoch()
             print(f"Mean Loss of Epoch {self.current_epoch_num} is {epoch_result['epoch_loss_mean']}:")
             train_losses.append(epoch_result)
+            if self.current_epoch_num % self.validation_period == 0:
+                epoch_acc = tester.test(self.val_dataloader, self.model, self.head_num, self.device)
+                print(f"Accuracy of Epoch {self.current_epoch_num} is {epoch_acc}:")
         
 
 

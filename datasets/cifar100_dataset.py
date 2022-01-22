@@ -15,7 +15,8 @@ class Cifar100Dataset(Dataset):
         
         self.dataset = torchvision.datasets.CIFAR100(root='./data', train=train_split, download=True)
         self.transform = transforms.Compose(
-            [transforms.ToTensor(),transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
+            [transforms.ToTensor(),
+            transforms.Normalize((0.5071, 0.4867, 0.4408), (0.2675, 0.2565, 0.2761))])
 
         
 

@@ -3,6 +3,8 @@ currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentfram
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir)
 
+
+import argparse
 from datasets import cifar10_dataset, cifar100_dataset
 import torch
 from models import classifier
@@ -13,9 +15,21 @@ from optimizers import optimizers
 from torch.utils.data import RandomSampler, DataLoader, Subset
 import numpy as np
 
+
 batch_size = 512
-cifar10_epochs = 500
-cifar100_epochs = 500
+cifar10_epochs = 100
+cifar100_epochs = 100
+
+
+# parsing arguments
+parser = argparse.ArgumentParser(description="sample argument parser")
+parser.add_argument("--batch",default=batch_size, type=int)
+parser.add_argument("--first_epochs",default=cifar10_epochs, type=int)
+parser.add_argument("--second_epochs",default=cifar100_epochs, type=int)
+args=parser.parse_args()
+batch_size = args.batch
+cifar10_epochs = args.first_epochs
+cifar100_epochs = args.second_epochs
 
 device = utils.get_gpu_if_available()
 ## build dataset
@@ -32,18 +46,19 @@ cifar100_train_dataloader = torch.utils.data.DataLoader(cifar100_train_dataset, 
     batch_size=batch_size, shuffle=True, num_workers=2)
 cifar100_test_dataloader = torch.utils.data.DataLoader(cifar100_test_dataset, \
     batch_size=batch_size, shuffle=True, num_workers=2)
+
 # model
 model = classifier.Classifier("resnet18", 10)
 model.add_classifier_head(100)
 
-
+#training scenario1
 optimizer = optimizers.Optimizer(model.parameters(), lr=0.00001)
 trainer = supervised_trainer.SupervisedTrainer(cifar10_train_dataloader, \
     cifar10_test_dataloader, model, optimizer, device, head_num=0)
 trainer.run(num_epoch=cifar10_epochs)
 print("Acc of cifar10 : ", tester.test(cifar10_test_dataloader, model, 0, device))
 
-
+#training scenraio2
 optimizer = optimizers.Optimizer(model.parameters(), lr=0.00001)
 trainer = supervised_trainer.SupervisedTrainer(cifar100_train_dataloader, \
     cifar100_test_dataloader, model, optimizer, device, head_num=1)
