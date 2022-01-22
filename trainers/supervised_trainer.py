@@ -19,7 +19,7 @@ class SupervisedTrainer():
     
     def a_epoch(self):
         self.model.to(self.device)
-        self.model.train()
+        self.model = self.model.train()
         lossess = []
         for x,y in tqdm(self.train_dataloader):
             x = x.to(self.device)

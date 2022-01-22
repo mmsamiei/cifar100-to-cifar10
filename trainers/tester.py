@@ -2,7 +2,7 @@ from computations import accuracy_computation
 from tqdm.auto import tqdm
 
 def test(test_dataloader, model, head_num, device):
-    model.eval()
+    model = model.eval()
     model.to(device)
     correct = 0
     total = 0

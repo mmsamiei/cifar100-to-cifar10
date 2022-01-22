@@ -63,6 +63,6 @@ optimizer = optimizers.Optimizer(model.parameters(), lr=0.00001)
 trainer = supervised_trainer.SupervisedTrainer(cifar100_train_dataloader, \
     cifar100_test_dataloader, model, optimizer, device, head_num=1)
 trainer.run(num_epoch=cifar100_epochs)
-print("Acc of cifar100 : ", tester.test(cifar100_test_dataloader, model, 0, device))
+print("Acc of cifar100 : ", tester.test(cifar100_test_dataloader, model, 1, device))
 
 

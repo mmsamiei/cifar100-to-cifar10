@@ -16,7 +16,7 @@ def accuracy_computation(model, head_number, x, y):
             This is a description of what is returned.
     """
     model.eval()
-    model_output = model(x)[head_number] ## score: [batch, num_class]
-    predicted = model(x)[0].argmax(dim=1) ## [batch]
+    #model_output = model(x)[head_number] ## score: [batch, num_class]
+    predicted = model(x)[head_number].argmax(dim=1) ## [batch]
     num_correct = (predicted == y).sum().item()
     return {'num_correct': num_correct, 'total': len(x)}
