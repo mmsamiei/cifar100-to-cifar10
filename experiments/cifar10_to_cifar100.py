@@ -15,7 +15,7 @@ from optimizers import optimizers
 from torch.utils.data import RandomSampler, DataLoader, Subset
 import numpy as np
 import torchvision.transforms as transforms
-
+from sklearn.model_selection import train_test_split
 
 batch_size = 512
 cifar10_epochs = 100
@@ -37,10 +37,11 @@ device = utils.get_gpu_if_available()
 train_transform = transforms.Compose([transforms.ToPILImage(),
     transforms.RandomHorizontalFlip(),
     transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, hue=0.2)])
-cifar10_train_dataset = cifar10_dataset.Cifar10Dataset("train", train_transform)
+cifar10_train_dataset = cifar10_dataset.Cifar10Dataset("train", train_transform, subset_proportion=0.1)
 cifar10_test_dataset = cifar10_dataset.Cifar10Dataset("test")
-cifar100_train_dataset = cifar100_dataset.Cifar100Dataset("train", train_transform)
+cifar100_train_dataset = cifar100_dataset.Cifar100Dataset("train", train_transform, subset_proportion=0.1)
 cifar100_test_dataset = cifar100_dataset.Cifar100Dataset("test")
+
 ## dataloaders
 cifar10_train_dataloader = torch.utils.data.DataLoader(cifar10_train_dataset, \
     batch_size=batch_size, shuffle=True, num_workers=2)
