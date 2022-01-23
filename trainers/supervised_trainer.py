@@ -45,7 +45,7 @@ class SupervisedTrainer():
                 validation_accs.append(epoch_acc)
                 print(f"Accuracy of Epoch {self.current_epoch_num} is {epoch_acc}:")
         
-        if not validation_accs:
+        if validation_accs:
             print(f"max of accuracies is {max(validation_accs)}")
         
 
