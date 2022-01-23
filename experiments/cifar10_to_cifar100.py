@@ -39,7 +39,7 @@ train_transform = transforms.Compose([transforms.ToPILImage(),
     transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, hue=0.2)])
 cifar10_train_dataset = cifar10_dataset.Cifar10Dataset("train", train_transform)
 cifar10_test_dataset = cifar10_dataset.Cifar10Dataset("test")
-cifar100_train_dataset = cifar100_dataset.Cifar100Dataset("train")
+cifar100_train_dataset = cifar100_dataset.Cifar100Dataset("train", train_transform)
 cifar100_test_dataset = cifar100_dataset.Cifar100Dataset("test")
 ## dataloaders
 cifar10_train_dataloader = torch.utils.data.DataLoader(cifar10_train_dataset, \
