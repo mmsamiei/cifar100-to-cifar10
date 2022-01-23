@@ -34,7 +34,9 @@ cifar100_epochs = args.second_epochs
 
 device = utils.get_gpu_if_available()
 ## build dataset
-train_transform = transforms.Compose([transforms.ToPILImage(),transforms.RandomHorizontalFlip()])
+train_transform = transforms.Compose([transforms.ToPILImage(),
+    transforms.RandomHorizontalFlip(),
+    transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, hue=0.2)])
 cifar10_train_dataset = cifar10_dataset.Cifar10Dataset("train", train_transform)
 cifar10_test_dataset = cifar10_dataset.Cifar10Dataset("test")
 cifar100_train_dataset = cifar100_dataset.Cifar100Dataset("train")
