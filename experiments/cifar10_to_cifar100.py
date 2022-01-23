@@ -14,6 +14,7 @@ from trainers import tester
 from optimizers import optimizers
 from torch.utils.data import RandomSampler, DataLoader, Subset
 import numpy as np
+import torchvision.transforms as transforms
 
 
 batch_size = 512
@@ -33,7 +34,8 @@ cifar100_epochs = args.second_epochs
 
 device = utils.get_gpu_if_available()
 ## build dataset
-cifar10_train_dataset = cifar10_dataset.Cifar10Dataset("train")
+train_transform = transforms.Compose([transforms.ToPILImage(),transforms.RandomHorizontalFlip()])
+cifar10_train_dataset = cifar10_dataset.Cifar10Dataset("train", train_transform)
 cifar10_test_dataset = cifar10_dataset.Cifar10Dataset("test")
 cifar100_train_dataset = cifar100_dataset.Cifar100Dataset("train")
 cifar100_test_dataset = cifar100_dataset.Cifar100Dataset("test")

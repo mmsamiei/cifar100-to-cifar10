@@ -33,6 +33,7 @@ class SupervisedTrainer():
     
     def run(self, num_epoch=10):
         train_losses = []
+        validation_accs = []
         for i in tqdm(range(num_epoch)):
             self.current_epoch_num += 1
             print(f"Epoch {self.current_epoch_num}: ")
@@ -41,7 +42,11 @@ class SupervisedTrainer():
             train_losses.append(epoch_result)
             if self.current_epoch_num % self.validation_period == 0:
                 epoch_acc = tester.test(self.val_dataloader, self.model, self.head_num, self.device)
+                validation_accs.append(epoch_acc)
                 print(f"Accuracy of Epoch {self.current_epoch_num} is {epoch_acc}:")
+        
+        if not validation_accs:
+            print(f"max of accuracies is {max(validation_accs)}")
         
 
 
