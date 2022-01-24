@@ -34,9 +34,10 @@ cifar100_epochs = args.first_epochs
 
 device = utils.get_gpu_if_available()
 ## build dataset
-train_transform = transforms.Compose([transforms.ToPILImage(),
-    transforms.RandomHorizontalFlip(),
-    transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, hue=0.2)])
+train_transform = transforms.Compose([
+    transforms.ToPILImage(),
+    transforms.RandomCrop(32, padding=4),
+    transforms.RandomHorizontalFlip()])
 cifar10_train_dataset = cifar10_dataset.Cifar10Dataset("train", train_transform, subset_proportion=0.1)
 cifar10_test_dataset = cifar10_dataset.Cifar10Dataset("test")
 cifar100_train_dataset = cifar100_dataset.Cifar100Dataset("train", train_transform, subset_proportion=1)
@@ -63,6 +64,7 @@ trainer = supervised_trainer.SupervisedTrainer(cifar100_train_dataloader, \
     cifar100_test_dataloader, model, optimizer, device, head_num=1)
 trainer.run(num_epoch=cifar100_epochs)
 print("Acc of cifar100 : ", tester.test(cifar100_test_dataloader, model, 1, device))
+print("*"*10)
 
 
 
