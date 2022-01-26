@@ -34,10 +34,10 @@ train_transform = transforms.Compose([
     transforms.ToPILImage(),
     transforms.RandomCrop(32, padding=4),
     transforms.RandomHorizontalFlip()])
+cifar100_train_dataset = cifar100_dataset.Cifar100Dataset("train", train_transform, subset_proportion=1)
+cifar100_test_dataset = cifar100_dataset.Cifar100Dataset("test")
 cifar10_train_dataset = cifar10_dataset.Cifar10Dataset("train", train_transform, subset_proportion=0.1)
 cifar10_test_dataset = cifar10_dataset.Cifar10Dataset("test")
-cifar100_train_dataset = cifar100_dataset.Cifar100Dataset("train", train_transform, subset_proportion=0.1)
-cifar100_test_dataset = cifar100_dataset.Cifar100Dataset("test")
 
 ## dataloaders
 cifar10_train_dataloader = torch.utils.data.DataLoader(cifar10_train_dataset, \
@@ -57,7 +57,7 @@ model.add_classifier_head(100)
 #training scenraio1
 print("Task cifar100:")
 optimizer = torch.optim.SGD(model.parameters(), lr=0.1,momentum=0.9, weight_decay=5e-4)
-scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=cifar10_epochs)
+scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=cifar10_epochs+cifar100_epochs)
 trainer = supervised_trainer.SupervisedTrainer(cifar10_train_dataloader, \
     cifar10_test_dataloader, model, optimizer, device, head_num=1, scheduler=scheduler)
 trainer.run(num_epoch=cifar100_epochs)
@@ -68,8 +68,8 @@ print("*"*10)
 
 #training scenario2
 print("Task cifar10:")
-optimizer = torch.optim.SGD(model.parameters(), lr=0.1,momentum=0.9, weight_decay=5e-4)
-scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=cifar10_epochs)
+# optimizer = torch.optim.SGD(model.parameters(), lr=0.1,momentum=0.9, weight_decay=5e-4)
+# scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=cifar10_epochs)
 trainer = supervised_trainer.SupervisedTrainer(cifar10_train_dataloader, \
     cifar10_test_dataloader, model, optimizer, device, head_num=0, scheduler=scheduler)
 trainer.run(num_epoch=cifar10_epochs)
