@@ -54,6 +54,7 @@ model = classifier.Classifier("resnet18", 10)
 model.add_classifier_head(100)
 
 #training scenario1
+print("Task cifar10:")
 optimizer = torch.optim.SGD(model.parameters(), lr=0.1,momentum=0.9, weight_decay=5e-4)
 scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=cifar10_epochs+cifar100_epochs)
 trainer = supervised_trainer.SupervisedTrainer(cifar10_train_dataloader, \
@@ -63,6 +64,7 @@ print("Acc of cifar10 : ", tester.test(cifar10_test_dataloader, model, 0, device
 print("*"*10)
 
 #training scenraio2
+print("Task cifar100:")
 #optimizer = torch.optim.SGD(model.parameters(), lr=0.1,momentum=0.9, weight_decay=5e-4)
 #scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=cifar100_epochs)
 trainer = supervised_trainer.SupervisedTrainer(cifar100_train_dataloader, \
