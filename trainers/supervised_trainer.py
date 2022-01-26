@@ -16,6 +16,12 @@ class SupervisedTrainer():
         self.validation_period = 5
         if 'head_num' in kwargs:
             self.head_num = kwargs['head_num']
+
+        if 'scheduler' in kwargs:
+            self.scheduler = kwargs['scheduler']
+            self.has_scheduler = True
+        else:
+            self.has_scheduler = False
     
     def a_epoch(self, epoch_num):
         self.model.to(self.device)
@@ -48,6 +54,9 @@ class SupervisedTrainer():
                     self.device, tqdm_description=f"Epoch {self.current_epoch_num} Validation")
                 validation_accs.append(epoch_acc)
                 #print(f"Accuracy of Epoch {self.current_epoch_num} is {epoch_acc}:")
+            
+            if self.has_scheduler:
+                self.scheduler.step()
         
         if validation_accs:
             print(f"max of accuracies is {max(validation_accs)} \n")
