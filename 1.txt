@@ -4,7 +4,3 @@ Files already downloaded and verified
 Files already downloaded and verified
 Files already downloaded and verified
 Task cifar100:
-Acc of cifar100 :  0.0108
-**********
-Task cifar10:
-Acc of cifar10 :  0.257
