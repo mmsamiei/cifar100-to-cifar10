@@ -60,12 +60,9 @@ task_names = ['Cifar10', 'Cifar100']
 trainer = supervised_joint_trainer.SupervisedJointTrainer(train_dataloaders, valid_dataloaders,\
     model, optimizer, device, head_nums=[0, 1], scheduler=scheduler, task_names=task_names)
 trainer.run(num_epoch=num_epochs)
+
 print("Acc of cifar10 : ", tester.test(cifar10_test_dataloader, model, 0, device))
 print("*"*10)
-
-#training scenraio2
-#optimizer = torch.optim.SGD(model.parameters(), lr=0.1,momentum=0.9, weight_decay=5e-4)
-#scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=cifar100_epochs)
 print("Acc of cifar100 : ", tester.test(cifar100_test_dataloader, model, 1, device))
 
 

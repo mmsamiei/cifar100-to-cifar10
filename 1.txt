@@ -3,4 +3,5 @@ Files already downloaded and verified
 Files already downloaded and verified
 Files already downloaded and verified
 Files already downloaded and verified
-Task cifar100:
+-------------------- 
+ Start warm-up with cifar100
