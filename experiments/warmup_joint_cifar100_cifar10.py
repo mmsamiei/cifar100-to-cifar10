@@ -9,9 +9,7 @@ from datasets import cifar10_dataset, cifar100_dataset
 import torch
 from models import classifier
 from utils import utils
-from trainers import supervised_joint_trainer, supervised_trainer
-from trainers import tester
-from optimizers import optimizers
+from trainers import supervised_joint_trainer, supervised_trainer, tester
 from torch.utils.data import RandomSampler, DataLoader, Subset
 import numpy as np
 import torchvision.transforms as transforms

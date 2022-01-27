@@ -11,7 +11,6 @@ from models import classifier
 from utils import utils
 from trainers import supervised_joint_trainer
 from trainers import tester
-from optimizers import optimizers
 from torch.utils.data import RandomSampler, DataLoader, Subset
 import numpy as np
 import torchvision.transforms as transforms
